@@ -6,13 +6,10 @@ export class EmployeeService {
 
     getSupervisorName(enteredId: number) {
         if (enteredId) {
-            const employee = repository.findById(enteredId);
-            if (employee && employee.supervisorId) {
-                const supervisor = repository.findById(employee.supervisorId);
-                if (supervisor) {
-                    return supervisor.name;
-                }
-            }
+            return repository.findById(enteredId)
+                .flatMap(employee => employee.supervisorId)
+                .flatMap(supervisorId => repository.findById(supervisorId))
+                .map(supervisor => supervisor.name)
         }
     }
 }
