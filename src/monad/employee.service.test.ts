@@ -1,4 +1,5 @@
 import {EmployeeService} from "./employee.service"
+import {Maybe} from "./maybe.monad";
 
 describe('employee service', () => {
     it('return undefined when getSupervisorName given an invalid id', () => {
@@ -20,5 +21,10 @@ describe('employee service', () => {
         const service = new EmployeeService();
 
         expect(service.getSupervisorName(employeeId)).toEqual({"value": "John"})
+    })
+
+    it('return some string when construct Maybe given a string', () => {
+        const inputString = "my name";
+        expect(Maybe.fromValue(inputString)).toEqual(Maybe.some(inputString))
     })
 })
